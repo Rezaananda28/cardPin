@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIN BUCIN</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Comic Sans MS", cursive;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        width: auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .image-container {
+        flex: 1;
+        height: 350px;
+        padding-right: 50px; /* Tambahkan padding */
+        padding-top: 40px;
+      }
+
+      .image-container img {
+        width: auto;
+        height: 300px; /* Menjaga aspek rasio gambar */
+        border: 3px solid #ff6b81;
+        border-radius: 10px;
+        object-fit: cover; /* Memastikan gambar menyesuaikan ukuran container */
+      }
+
+      .form-container {
+        flex: 2;
+        text-align: center;
+      }
+
+      h2 {
+        color: #e84393;
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 18px;
+        text-align: center;
+        border: 2px solid #ff6b81;
+        border-radius: 10px;
+        outline: none;
+      }
+
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .keypad button {
+        padding: 15px;
+        font-size: 18px;
+        background-color: #ff6b81;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .keypad button:hover {
+        background-color: #e84393;
+      }
+
+      button.submit-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff6b81;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button.submit-btn:hover {
+        background-color: #e84393;
+      }
+
+      .error-msg {
+        color: #ff4757;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      .hearts {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #ff6b81;
+        transform: rotate(45deg);
+        animation: float 6s infinite ease-in-out;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #ff6b81;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        top: -10px;
+        left: 0;
+      }
+
+      .heart::after {
+        left: 10px;
+        top: 0;
+      }
+
+      .heart:nth-child(1) {
+        left: 20%;
+        animation-duration: 7s;
+      }
+
+      .heart:nth-child(2) {
+        left: 40%;
+        animation-duration: 5s;
+        animation-delay: 1s;
+      }
+
+      .heart:nth-child(3) {
+        left: 60%;
+        animation-duration: 4s;
+        animation-delay: 2s;
+      }
+
+      .heart:nth-child(4) {
+        left: 80%;
+        animation-duration: 6s;
+        animation-delay: 3s;
+      }
+
+      .heart:nth-child(5) {
+        left: 50%;
+        animation-duration: 5.5s;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(45deg);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(45deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Container Foto -->
+      <div class="image-container">
+        <img src="/public/img/pincard.jpg" alt="Romantic Poto" />
+      </div>
+
+      <!-- Form PIN -->
+      <div class="form-container">
+        <h2>Masukan PIN dulu cinte</h2>
+        <input
+          type="password"
+          id="pinInput"
+          maxlength="4"
+          placeholder="••••"
+          readonly
+        />
+
+        <!-- Keypad tombol angka -->
+        <div class="keypad">
+          <button onclick="appendNumber('1')">1</button>
+          <button onclick="appendNumber('2')">2</button>
+          <button onclick="appendNumber('3')">3</button>
+          <button onclick="appendNumber('4')">4</button>
+          <button onclick="appendNumber('5')">5</button>
+          <button onclick="appendNumber('6')">6</button>
+          <button onclick="appendNumber('7')">7</button>
+          <button onclick="appendNumber('8')">8</button>
+          <button onclick="appendNumber('9')">9</button>
+          <button onclick="clearInput()">⟲</button>
+          <button onclick="appendNumber('0')">0</button>
+          <button onclick="verifyPin()">✓</button>
+        </div>
+        <p id="errorMsg" class="error-msg"></p>
+      </div>
+    </div>
+
+    <div class="hearts">
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </div>
+
+    <script>
+      // PIN yang benar
+      const correctPin = "1730";
+
+      // Fungsi untuk menambahkan angka ke input PIN
+      function appendNumber(number) {
+        const pinInput = document.getElementById("pinInput");
+        if (pinInput.value.length < 4) {
+          pinInput.value += number;
+        }
+      }
+
+      // Fungsi untuk menghapus input PIN
+      function clearInput() {
+        document.getElementById("pinInput").value = "";
+      }
+
+      // Fungsi untuk memverifikasi PIN
+      function verifyPin() {
+        const pinInput = document.getElementById("pinInput").value;
+        const errorMsg = document.getElementById("errorMsg");
+
+        // Mengecek apakah PIN yang dimasukkan sesuai
+        if (pinInput === correctPin) {
+          errorMsg.textContent = ""; // Hapus pesan error jika ada
+          window.location.href = "card2.html"; // Arahkan ke card2.html di folder yang sama
+        } else {
+          errorMsg.textContent = "PIN salah, silakan coba lagi."; // Tampilkan pesan error
+        }
+      }
+    </script>
+  </body>
+</html>
